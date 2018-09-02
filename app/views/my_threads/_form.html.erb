@@ -1,0 +1,6 @@
+<%= link_to "back to list", :my_threads %>
+
+<%= form_for @my_thread do |f| %>
+    <p><%= f.text_field :title %></p>
+    <p><%= f.submit %></p>
+<% end %>

@@ -1,0 +1,14 @@
+<%= link_to :articles do %>
+  <button><%= fa_icon 'angle-double-left' %><span>back to list</span></button>
+<% end %>
+<% if @article.errors.any? %>
+  <% @article.errors.full_messages.each do |message| %>
+    <p class="message alert"><%= message %></p>
+  <% end %>
+<% end %>
+
+<%= form_for @article do |f| %>
+  <p><%= f.text_field :title %></p>
+  <p><%= f.text_area :content %></p>
+  <p><%= f.submit %></p>
+<% end %>

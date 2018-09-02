@@ -1,0 +1,22 @@
+<h2>Threads</h2>
+
+<%= link_to "new", :new_my_thread %>
+
+<% if @my_threads.any? %>
+<ul>
+  <% @my_threads.each do |thread| %>
+  <li>
+    <%= link_to thread.title, my_thread_comments_path(thread) %>
+    <button>
+      <%= link_to 'Edit', edit_my_thread_path(thread) %>
+    </button>
+    <button>
+      <%= link_to 'del',
+        my_thread_path(thread),
+        method: :delete,
+        data: { confirm: 'Sure?' } %>
+    </button>
+  </li>
+  <% end %>
+</ul>
+<% end %>

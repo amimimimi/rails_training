@@ -1,0 +1,6 @@
+<h2><%= @article.title %></h2>
+<p class="author">by <%= @article.user.name %></p>
+<p><%= @article.content %></p>
+<%= link_to :articles do %>
+  <button><%= fa_icon 'angle-double-left' %><span>back to list</span></button>
+<% end %>

@@ -1,0 +1,15 @@
+<h2><%= @my_thread.title %></h2>
+<p><%= link_to 'back to threads', my_threads_path %></p>
+<p><%= link_to 'New comment', new_my_thread_comment_path %></p>
+
+<% if @my_thread.comments.any? %>
+<ul>
+  <% @my_thread.comments.each do |comment| %>
+    <li>
+      <%= comment.body %>
+      <button><%= link_to 'Edit', edit_my_thread_comment_path(@my_thread, comment) %></button>
+      <button><%= link_to 'Delete', my_thread_comment_path(@my_thread, comment), method: :delete %></button>
+    </li>
+  <% end %>
+</ul>
+<% end %>

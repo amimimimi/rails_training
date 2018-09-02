@@ -1,0 +1,36 @@
+<h2>Articles</h2>
+
+<%= link_to :new_article do %>
+  <button><%= fa_icon 'plus' %><span>new</span></button>
+<% end %>
+
+<% if @articles.any? %>
+<ul>
+  <% @articles.each do |article| %>
+  <li>
+    <%= link_to article do %>
+      <%= article.title %> - by <%= article.user.name %>
+    <% end %>
+      <%= link_to article_path(article), method: :delete, data: { confirm: 'Sure?' } do %>
+        <button><span>Delete</span></button>
+      <% end %>
+    <% if article.user == current_user %>
+      <%= link_to edit_article_path(article) do %>
+        <button><span>Edit</span></button>
+      <% end %>
+      <%= link_to article_path(article), method: :delete, data: { confirm: 'Sure?' } do %>
+        <button><span>Delete</span></button>
+      <% end %>
+    <% else %>
+      <%= link_to favorite_article_path(article), method: :post do %>
+        <% if is_favorite? article.favorite_articles %>
+          <%= fa_icon('star', class: 'favorite') %>
+        <% else %>
+          <%= fa_icon('star-o', class: 'favorite') %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
+<% end %>

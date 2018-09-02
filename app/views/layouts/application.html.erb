@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header class="clearfix">
+      <h1>My board</h1>
+      <nav>
+        <% if user_signed_in? %>
+          <span>hello <%= current_user.name %></span>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+            <button><%= fa_icon 'sign-out' %><span>logout</span></button>
+            <% end %>
+        <% else %>
+          <%= link_to new_user_registration_path do %>
+            <button><span>sign up</span></button>
+          <% end %>
+          <%= link_to new_user_session_path do %>
+            <button><span>login</span></button>
+          <% end %>
+        <% end %>
+      </nav>
+    </header>
+    <div class="content" id="<%= controller.controller_name + '_' +  controller.action_name %>">
+      <nav class="menu">
+        <ul>
+          <li><%= link_to 'articles', articles_path %></li>
+          <li><%= link_to 'favorites', favorites_articles_path %></li>
+        </ul>
+      </nav>
+      <% unless notice.nil? %>
+        <p class="message notice"><%= notice %></p>
+      <% end %>
+      <% unless alert.nil? %>
+        <p class="message alert"><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>

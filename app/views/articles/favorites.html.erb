@@ -1,0 +1,17 @@
+<h2>Favorites</h2>
+
+<%= link_to :articles do %>
+  <button><%= fa_icon 'angle-double-left' %><span>back to list</span></button>
+<% end %>
+
+<% if @articles.any? %>
+<ul>
+  <% @articles.each do |article| %>
+  <li>
+    <%= link_to article do %>
+      <%= article.title %> - by <%= article.user.name %>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
+<% end %>

@@ -1,0 +1,16 @@
+<h2>Articles</h2>
+
+<% if @articles.any? %>
+<ul>
+  <% @articles.each do |article| %>
+  <li>
+    <%= link_to article do %>
+      <%= article.title %> - by <%= article.user.name %>
+    <% end %>
+    <%= link_to admins_article_path(article), method: :delete, data: { confirm: 'Sure?' } do %>
+      <button><span>Delete</span></button>
+    <% end %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
