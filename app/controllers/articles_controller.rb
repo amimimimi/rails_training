@@ -1,12 +1,16 @@
 class ArticlesController < ApplicationController
+
+  # get /articles(.:format)
   def index
-    @articles = Article.all.order(created_at: 'desc').includes(:user, :favorite_articles)
+    @articles = Article.all.order(created_at: 'desc').includes(:user)
   end
 
+  # get /articles/new(.:format)
   def new
     @article = Article.new
   end
 
+  # post /articles(.:format)
   def create
     @article = Article.new(article_param)
     @article.user = current_user
@@ -18,14 +22,17 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # get /articles/:id(.:format)
   def show
     @article = Article.find(params[:id])
   end
 
+  # get /articles/:id/edit(.:format)
   def edit
     @article = Article.find(params[:id])
   end
 
+  # put /articles/:id(.:format)
   def update
     @article = Article.find(params[:id])
     if @article.update(article_param)
@@ -36,9 +43,9 @@ class ArticlesController < ApplicationController
     end
   end
 
+  # delete /articles/:id(.:format)
   def destroy
-    @article = Article.find(params[:id])
-    # @article.current_user = current_user
+    @article = current_user.articles.find_by(article_id: params[:id])
     if @article.destroy
       flash[:notice] = 'deleted successfully'
     else
@@ -47,24 +54,24 @@ class ArticlesController < ApplicationController
     redirect_to articles_path
   end
 
+  # post /articles/:id/favorite(.:format)
   def favorite
-    if current_user.favorite_articles.exists?(article_id: params[:id])
-      current_user.favorite_articles.where(article_id: params[:id]).destroy_all
+    article = Article.find(params[:id])
+    if current_user.is_favorite?(article)
+      current_user.not_favorites(article)
     else
-      favorite = FavoriteArticle.new
-      favorite.user = current_user
-      favorite.article = Article.find(params[:id])
-      favorite.save
+      current_user.add_favorites(article)
     end
-    redirect_to articles_path
+    redirect_to request.referrer
   end
 
+  # get /articles/favorites(.:format)
   def favorites
     @articles = current_user.user_favorite_articles
   end
 
   private
     def article_param
-      params.require(:article).permit(:title, :content)
+      params.require(:article).permit(:title, :content, :image)
     end
 end

@@ -1,0 +1,14 @@
+<h2><%= @user.name %> <%= render partial: 'follow_icon', locals: {user: @user} %></h2>
+<%= image_tag user_image(@user, 100) %>
+<p>
+  following: 
+  <%= link_to following_user_path do %>
+    <span><%= @user.following.count %></span>
+  <% end %>
+</p>
+<p>
+  follower: 
+  <%= link_to followers_user_path do %>
+    <span><%= @user.follower.count %></span>
+  <% end %>
+</p>

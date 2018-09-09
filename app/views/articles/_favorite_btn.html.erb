@@ -1,0 +1,9 @@
+<% if article.user != current_user %>
+  <%= link_to favorite_article_path(article), method: :post do %>
+    <% if current_user.is_favorite?(article) %>
+      <%= fa_icon('star', class: 'favorite') %>
+    <% else %>
+      <%= fa_icon('star-o', class: 'favorite') %>
+    <% end %>
+  <% end %>
+<% end %>

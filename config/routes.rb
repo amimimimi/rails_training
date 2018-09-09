@@ -22,11 +22,20 @@ Rails.application.routes.draw do
     get :favorites, on: :collection
   end
 
+  resources :users, only: [:show] do
+    member do
+      get :following, :followers
+    end
+  end
+
+  resources :relationships, only: [:create, :destroy]
+
+  root 'articles#index'
+
   namespace :admins do
     resources :users, only: [:index, :destroy]
     resources :articles, only: [:index, :destroy]
     root 'articles#index'
   end
 
-  root 'articles#index'
 end

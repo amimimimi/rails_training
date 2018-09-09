@@ -4,6 +4,7 @@
 <ul>
   <% @users.each do |user| %>
   <li>
+    <%= image_tag user_image(user, 30) %>
     name: <%= user.name %><br>
     created at: <%= user.created_at.to_s %>
     <%= link_to admins_user_path(user), method: :delete, data: { confirm: 'Sure?' } do %>

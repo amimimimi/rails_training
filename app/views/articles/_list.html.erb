@@ -1,0 +1,22 @@
+<% if @articles.any? %>
+<ul class="article_list">
+  <% @articles.each do |article| %>
+  <li class="clearfix">
+    <%= image_tag article_image(article, 100), class: 'article_image' %>
+    <p><%= link_to content_tag('span', article.title), article %></p>
+       by <%= image_tag user_image(article.user, 30), class: 'user_image' %>
+    <%= link_to content_tag('span', article.user.name), user_path(article.user) %>
+
+    <% if article.user == current_user %>
+      <%= link_to edit_article_path(article) do %>
+        <button><span>Edit</span></button>
+      <% end %>
+      <%= link_to article_path(article), method: :delete, data: { confirm: 'Sure?' } do %>
+        <button><span>Delete</span></button>
+      <% end %>
+    <% end %>
+    <%= render partial: 'favorite_btn', locals: {article: article} %>
+  </li>
+  <% end %>
+</ul>
+<% end %>

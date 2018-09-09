@@ -1,6 +1,10 @@
-<h2><%= @article.title %></h2>
+<h2>
+  <%= @article.title %>
+  <%= render partial: 'favorite_btn', locals: {article: @article} %>
+</h2>
 <p class="author">by <%= @article.user.name %></p>
 <p><%= @article.content %></p>
+<%= image_tag @article.image.thumb500.url if @article.image.present? %>
 <%= link_to :articles do %>
   <button><%= fa_icon 'angle-double-left' %><span>back to list</span></button>
 <% end %>

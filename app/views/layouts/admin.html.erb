@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Admin</title>
+    <title>for admin</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -12,7 +12,7 @@
   <body class="admin">
     <header class="clearfix">
       <h1>My board</h1>
-      <nav>
+      <nav class="logins">
         <% if admin_signed_in? %>
           <span>hello admin</span>
           <%= link_to destroy_admin_session_path, method: :delete do %>
@@ -27,14 +27,16 @@
           <% end %>
         <% end %>
       </nav>
+      <% if admin_signed_in? %>
+        <nav class="menu">
+          <ul>
+            <%= content_tag 'li', link_to('articles', admins_articles_path), class: menu_class('articles', 'index') %>
+            <%= content_tag 'li', link_to('users', admins_users_path), class: menu_class('users', 'index') %>
+          </ul>
+        </nav>
+      <% end %>
     </header>
     <div class="content" id="<%= controller.controller_name + '_' +  controller.action_name %>">
-      <nav class="menu">
-        <ul>
-          <li><%= link_to 'articles', admins_articles_path %></li>
-          <li><%= link_to 'users', admins_users_path %></li>
-        </ul>
-      </nav>
       <% unless notice.nil? %>
         <p class="message notice"><%= notice %></p>
       <% end %>

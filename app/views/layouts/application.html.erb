@@ -12,9 +12,13 @@
   <body>
     <header class="clearfix">
       <h1>My board</h1>
-      <nav>
+      <nav class="logins">
         <% if user_signed_in? %>
-          <span>hello <%= current_user.name %></span>
+          hello 
+            <%= link_to edit_user_registration_path do %>
+              <span><%= current_user.name %></span>
+              <%= image_tag user_image(current_user, 30), class: 'user_image' %>
+            <% end %>
           <%= link_to destroy_user_session_path, method: :delete do %>
             <button><%= fa_icon 'sign-out' %><span>logout</span></button>
             <% end %>
@@ -27,14 +31,18 @@
           <% end %>
         <% end %>
       </nav>
+      <% if user_signed_in? %>
+        <nav class="menu">
+          <ul>
+            <%= content_tag 'li', link_to('Articles', articles_path), class: menu_class('articles', 'index') %>
+            <%= content_tag 'li', link_to('Favorites', favorites_articles_path), class: menu_class('articles', 'favorites') %>
+            <%= content_tag 'li', link_to('Following', following_user_path(current_user)), class: menu_class('users', 'following') %>
+            <%= content_tag 'li', link_to('Followers', followers_user_path(current_user)), class: menu_class('users', 'followers') %>
+          </ul>
+        </nav>
+      <% end %>
     </header>
     <div class="content" id="<%= controller.controller_name + '_' +  controller.action_name %>">
-      <nav class="menu">
-        <ul>
-          <li><%= link_to 'articles', articles_path %></li>
-          <li><%= link_to 'favorites', favorites_articles_path %></li>
-        </ul>
-      </nav>
       <% unless notice.nil? %>
         <p class="message notice"><%= notice %></p>
       <% end %>
